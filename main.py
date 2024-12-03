@@ -1,6 +1,6 @@
 import json
 
-number = str(input("Введите код квалификации: "))
+number = input("Введите код квалификации: ")
 skills = False
 
 with open("dump.json", 'r', encoding='utf-8') as file: 
