@@ -1,30 +1,33 @@
 import json
 
-number = str(input("Введите номер квалификации: "))
-find = False
+number = str(input("Введите код квалификации: "))
+skills = False
 
-with open("D:/profiles/krachkA_82/Desktop/ipo-lr7-2-main/dump.json", 'r', encoding='utf-8') as file: 
+with open("dump.json", 'r', encoding='utf-8') as file: 
     data = json.load(file) 
     for skill in data:
         if skill.get("model") == "data.skill":
             if skill["fields"].get("code") == number: 
                 skill_code = skill["fields"].get("code")
                 skill_title = skill["fields"].get("title")
-                find = True
-            
+                skill_specialty =  skill["fields"].get("specialty")
+                skills = True
+    
+              
                 for profession in data:
                     if profession.get("model") == "data.specialty":
                         specialty_code = profession["fields"].get("code")
-                        if skill_code in specialty_code:  
+                        specialty_pk = profession["pk"]
+                        if specialty_code in number and  skill_specialty == specialty_pk :  
                             specialty_title = profession["fields"].get("title")
                             specialty_educational = profession["fields"].get("c_type")
-                            
-                  
-
-if not find:
+                            break            
+                break  
+                
+if not skills:
     print("=============== Не Найдено ===============") 
     
 else:
     print("=============== Найдено ===============") 
-    print(f"{specialty_code} >> Специальность '{specialty_title}' , {specialty_educational}")
-    print(f"{skill_code} >> Квалификация '{skill_title}'")
+    print(f"{specialty_code} >> Специальность {specialty_title} , {specialty_educational}")
+    print(f"{skill_code} >> Квалификация {skill_title}")
